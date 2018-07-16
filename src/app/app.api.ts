@@ -1,0 +1,1 @@
+export const MARVEL_API = 'https://gateway.marvel.com/v1/public/characters?ts=1531167736270&orderBy=name&limit=100&apikey=fb2ca21c8fe7ce05ba6a530d2f80753b&hash=f72a635d1d82e028541f4b54080f0741'

@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MarvelServiceProvider } from '../providers/marvel-service/marvel-service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MarvelServiceProvider } from '../providers/marvel-service/marvel-servic
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,7 +28,7 @@ import { MarvelServiceProvider } from '../providers/marvel-service/marvel-servic
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MarvelServiceProvider
+    MarvelServiceProvider,HttpModule
   ]
 })
 export class AppModule {}
