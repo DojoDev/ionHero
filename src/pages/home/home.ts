@@ -11,11 +11,17 @@ export class HomePage {
   obj: any;
   heroes: Array<any> = []
   loader: Loading;
+  //  Search Varialbe
+  public isSearchbarOpened = false;
+ 
 
   page: number = 1;
   perPage: number = 0;
   totalData: number = 0;
   totalPages: number = 0;
+  hasFilter: any;
+  noFilter: any;
+  searchTerm: any;
 
   constructor(
     public navCtrl: NavController,
@@ -38,6 +44,7 @@ export class HomePage {
     this.marvelService.load()
       .then(data => {
         this.obj = data;
+
         for (let i = 0; i <= 10; i++) {
           let n = new Hero(
             this.obj.data.results[i].name,
@@ -46,7 +53,7 @@ export class HomePage {
             this.obj.data.results[i].path,
             this.obj.data.results[i].modified
           );
-          console.log(n);
+          //console.log(n);
           this.heroes.push(n);
         }
         this.perPage = 10;
@@ -79,7 +86,32 @@ export class HomePage {
       this.page += 1;
       infiniteScroll.complete();
       this.loader.dismissAll();
-    }, 2000);
+    }, 500);
   }
+
+
+  onSearch(ev: any){
+    this.getTopStories();
+    let val = ev.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.heroes = this.heroes.filter((hero) => {
+        return (hero.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+   }
+
+  // getItems(ev) {
+  //   // Reset items back to all of the items
+  //   this.getTopStories();
+  //   // set val to the value of the ev target
+  //   var val = ev.target.value;
+  //   // if the value is an empty string don't filter the items
+  //   if (val && val.trim() != '') {
+  //     this.heroes = this.heroes.filter((hero) => {
+  //       return (hero.toLowerCase().indexOf(val.toLowerCase()) > -1);
+  //     })
+  //   }
+  // }
 
 }
