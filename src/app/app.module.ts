@@ -8,11 +8,13 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MarvelServiceProvider } from '../providers/marvel-service/marvel-service';
 import { HttpModule } from '@angular/http';
+import { DescriptionPage } from '../pages/description/description';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    DescriptionPage
   ],
   imports: [
     BrowserModule,
@@ -22,13 +24,14 @@ import { HttpModule } from '@angular/http';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    DescriptionPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MarvelServiceProvider,HttpModule
+    MarvelServiceProvider,HttpModule,  DescriptionPage
   ]
 })
 export class AppModule {}

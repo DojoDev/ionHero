@@ -1,8 +1,8 @@
 import { Hero } from './../../models/hero.model';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, Loading } from 'ionic-angular';
+import { NavController, LoadingController, Loading} from 'ionic-angular';
 import { MarvelServiceProvider } from '../../providers/marvel-service/marvel-service';
-
+import { DescriptionPage } from '../description/description';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -13,7 +13,7 @@ export class HomePage {
   loader: Loading;
   //  Search Varialbe
   public isSearchbarOpened = false;
- 
+
 
   page: number = 1;
   perPage: number = 0;
@@ -26,7 +26,8 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public marvelService: MarvelServiceProvider,
-    public loadingCtrl: LoadingController) { }
+    public loadingCtrl: LoadingController
+  ) { }
 
   ionViewDidLoad() {
     console.log("Initialized Ion Hero");
@@ -40,6 +41,12 @@ export class HomePage {
 
   }
 
+  getDetail(id: number){
+    this.navCtrl.push(DescriptionPage, {
+      id
+     });
+  }
+
   getTopStories() {
     this.marvelService.load()
       .then(data => {
@@ -47,6 +54,7 @@ export class HomePage {
 
         for (let i = 0; i <= 10; i++) {
           let n = new Hero(
+            this.obj.data.results[i].id,
             this.obj.data.results[i].name,
             this.obj.data.results[i].description,
             this.obj.data.results[i].thumbnail,
@@ -58,7 +66,7 @@ export class HomePage {
         }
         this.perPage = 10;
         this.totalData = this.obj.data.num_results;
-        this.totalPages = 100;
+        this.totalPages = 500;
         this.loader.dismissAll();
       }, (err) => {
         err = err;
@@ -75,6 +83,7 @@ export class HomePage {
       for (let i = 1; i <= this.perPage; i++) {
         if (result[i] != undefined) {
           let n = new Hero(
+            result[i].id,
             result[i].name,
             result[i].description,
             result[i].thumbnail,
@@ -90,7 +99,7 @@ export class HomePage {
   }
 
 
-  onSearch(ev: any){
+  onSearch(ev: any) {
     this.getTopStories();
     let val = ev.target.value;
     // if the value is an empty string don't filter the items
@@ -99,19 +108,6 @@ export class HomePage {
         return (hero.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
-   }
-
-  // getItems(ev) {
-  //   // Reset items back to all of the items
-  //   this.getTopStories();
-  //   // set val to the value of the ev target
-  //   var val = ev.target.value;
-  //   // if the value is an empty string don't filter the items
-  //   if (val && val.trim() != '') {
-  //     this.heroes = this.heroes.filter((hero) => {
-  //       return (hero.toLowerCase().indexOf(val.toLowerCase()) > -1);
-  //     })
-  //   }
-  // }
+  }
 
 }

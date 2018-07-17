@@ -1,11 +1,7 @@
-import { Injectable, ErrorHandler } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-//import 'rxjs/add/operator/catch';
-// import { Md5 } from 'ts-md5/dist/md5';
-// import { Observable } from 'rxjs/Observable';
 import { MARVEL_API } from '../../app/app.api';
-// import { MARVEL_API } from '../../app/app.api';
 /*
   Generated class for the MarvelServiceProvider provider.
 
@@ -14,7 +10,7 @@ import { MARVEL_API } from '../../app/app.api';
 */
 @Injectable()
 export class MarvelServiceProvider {
-  public id:number =0;
+  id;
   data: any;
   url: string;
 
@@ -26,6 +22,7 @@ export class MarvelServiceProvider {
     // let publicKey = "fb2ca21c8fe7ce05ba6a530d2f80753b";
     // let hash = Md5.hashStr(`${timeStamp}${privateKey}${publicKey}`);
     //this.url = `https://gateway.marvel.com:443/v1/public/characters?ts=${timeStamp}&orderBy=name&limit=10&apikey=${publicKey}&hash=${hash}`;
+  
   }
   ionViewDidLoad() {
     this.load();
@@ -47,5 +44,22 @@ export class MarvelServiceProvider {
   }
 
 
+  getHeroById(id: number) {
+    if (this.data) {
+      return Promise.resolve(this.data);
+    }
+
+    return new Promise(resolve => {
+      this.http.get(`https://gateway.marvel.com/v1/public/characters/${id}?ts=1531167736270&orderBy=name&limit=100&apikey=fb2ca21c8fe7ce05ba6a530d2f80753b&hash=f72a635d1d82e028541f4b54080f0741`)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+        })
+    })
+
+
+
+  }
 
 }

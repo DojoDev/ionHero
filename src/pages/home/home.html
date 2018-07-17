@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="marvel-color">
     <ion-title *ngIf="!isSearchbarOpened">
-      IonHero
+      Ion Hero
     </ion-title>
     <ion-searchbar *ngIf="isSearchbarOpened" (search)="onSearch($event)" showCancelButton="true" (ionCancel)="isSearchbarOpened=false">
     </ion-searchbar>
@@ -12,26 +12,16 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-card (click)="getDescription(hero.id)" *ngFor="let hero of heroes">
-    <img src="{{hero.thumbnail.path}}.{{hero.thumbnail.extension}}" />
-    <div class="card-title">{{hero.name}}</div>
-    <div class="card-subtitle">{{hero.modified | date: 'dd/MM/yyyy'}}</div>
-  </ion-card>
-  <!-- <ion-card (click)="getDescription(hero.id)" *ngFor="let hero of heroes">
-    <ion-item>
-      <ion-avatar>
-        <img src="{{hero.thumbnail.path}}.{{hero.thumbnail.extension}}">
-      </ion-avatar>
-
+  <ion-list>
+    <ion-item *ngFor="let hero of heroes" (click)="getDetail(hero.id)">
+      <ion-thumbnail item-start>
+        <img src="{{hero.thumbnail.path}}.{{hero.thumbnail.extension}}" />
+      </ion-thumbnail>
       <h2>{{hero.name}}</h2>
-      <p>{{hero.modified | date: 'dd/MM/yyyy'}}</p>
-    </ion-item>
-    <img src="{{hero.thumbnail.path}}.{{hero.thumbnail.extension}}">
-    <ion-card-content>
       <p>{{hero.description}}</p>
-    </ion-card-content>
-  </ion-card> -->
-
+      <button ion-button clear item-end >View</button>
+    </ion-item>
+  </ion-list>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
